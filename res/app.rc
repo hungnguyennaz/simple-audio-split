@@ -9,27 +9,31 @@ IDI_APP_OFF ICON "app_off.ico"
 
 CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "app.manifest"
 
-IDD_MAIN DIALOGEX 0, 0, 290, 204
+IDD_MAIN DIALOGEX 0, 0, 320, 242
 STYLE DS_SHELLFONT | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX
 EXSTYLE WS_EX_APPWINDOW
 CAPTION "Simple Audio Split"
 FONT 9, "Segoe UI", 400, 0, 0x1
 BEGIN
-    LTEXT           "Tick every device that should play your PC's sound:", IDC_STATIC, 10, 9, 270, 9
-    CONTROL         "", IDC_DEVICES, WC_LISTVIEW, LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER | WS_BORDER | WS_TABSTOP, 10, 21, 270, 100
+    LTEXT           "Tick every device that should play your PC's sound:", IDC_STATIC, 10, 9, 300, 9
+    CONTROL         "", IDC_DEVICES, WC_LISTVIEW, LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER | WS_BORDER | WS_TABSTOP, 10, 21, 300, 100
     PUSHBUTTON      "&Play test sound", IDC_TEST, 10, 127, 72, 14
     LTEXT           "Plays a short chime on the selected device, so you can tell identical headsets apart.", IDC_HINT, 89, 126, 191, 18
-    CONTROL         "", IDC_STATIC, "Static", SS_ETCHEDHORZ, 10, 150, 270, 1
-    LTEXT           "", IDC_STATUS, 10, 157, 270, 9, SS_ENDELLIPSIS
-    CONTROL         "&Mirroring on", IDC_ENABLED, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 10, 171, 140, 10
-    CONTROL         "Start with &Windows", IDC_STARTUP, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 10, 185, 140, 10
-    PUSHBUTTON      "E&xit", IDM_EXIT, 176, 182, 50, 14
-    DEFPUSHBUTTON   "Close", IDCANCEL, 230, 182, 50, 14
+    LTEXT           "Extra &delay (ms):", IDC_STATIC, 10, 154, 72, 12
+    EDITTEXT        IDC_DELAY, 85, 151, 48, 14, ES_NUMBER | WS_TABSTOP
+    PUSHBUTTON      "&Apply delay", IDC_DELAY_APPLY, 140, 151, 62, 14
+    LTEXT           "", IDC_DELAY_HINT, 10, 171, 300, 18
+    CONTROL         "", IDC_STATIC, "Static", SS_ETCHEDHORZ, 10, 192, 300, 1
+    LTEXT           "", IDC_STATUS, 10, 199, 300, 9, SS_ENDELLIPSIS
+    CONTROL         "&Mirroring on", IDC_ENABLED, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 10, 213, 140, 10
+    CONTROL         "Start with &Windows", IDC_STARTUP, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 10, 227, 140, 10
+    PUSHBUTTON      "E&xit", IDM_EXIT, 206, 224, 50, 14
+    DEFPUSHBUTTON   "Close", IDCANCEL, 260, 224, 50, 14
 END
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,0,0
- PRODUCTVERSION 1,0,0,0
+ FILEVERSION 2,0,0,0
+ PRODUCTVERSION 2,0,0,0
  FILEFLAGSMASK 0x3fL
  FILEFLAGS 0x0L
  FILEOS VOS_NT_WINDOWS32
@@ -41,11 +45,11 @@ BEGIN
         BLOCK "040904b0"
         BEGIN
             VALUE "FileDescription", "Simple Audio Split"
-            VALUE "FileVersion", "1.0.0"
+            VALUE "FileVersion", "2.0.0"
             VALUE "InternalName", "SimpleAudioSplit"
             VALUE "OriginalFilename", "SimpleAudioSplit.exe"
             VALUE "ProductName", "Simple Audio Split"
-            VALUE "ProductVersion", "1.0.0"
+            VALUE "ProductVersion", "2.0.0"
         END
     END
     BLOCK "VarFileInfo"
