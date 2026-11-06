@@ -1,6 +1,2 @@
-/build/
 /target/
-__pycache__/
-.vs/
 .vscode/
-*.user

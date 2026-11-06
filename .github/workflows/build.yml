@@ -28,16 +28,18 @@ jobs:
           cargo clippy --all-targets --locked -- -D warnings
 
       - name: Build
-        shell: cmd
-        run: build.bat
+        run: cargo build --release --locked
+
+      - name: Test
+        run: cargo test --release --locked
 
       - name: Upload binaries
         uses: actions/upload-artifact@v7
         with:
           name: SimpleAudioSplit
           path: |
-            build/SimpleAudioSplit.exe
-            build/sas-cli.exe
+            target/release/SimpleAudioSplit.exe
+            target/release/sas-cli.exe
 
   # Pushing a tag like v1.2.0 publishes the binaries built above as a GitHub release.
   release:

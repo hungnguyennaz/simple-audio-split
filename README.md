@@ -80,40 +80,36 @@ never merged automatically.
 
 ## Building
 
-The standard build requires Rust **1.88 or later** with the MSVC toolchain and
-Visual Studio 2022 or later's **Desktop development with C++** workload (linker and
-Windows SDK/resource compiler; the application itself contains no C++).
+Use Rust **1.88 or later** on Windows. The MSVC toolchain needs the Visual Studio
+Build Tools linker and Windows SDK/resource compiler.
 
-```bat
-build.bat
+```text
+cargo build --release --locked
+cargo run --release --bin SimpleAudioSplit
 ```
 
-This runs the release build and tests, then copies the standalone binaries to
-`build\SimpleAudioSplit.exe` and `build\sas-cli.exe`. The MSVC runtime is linked
-statically. Equivalent development checks:
+The portable executables are `target/release/SimpleAudioSplit.exe` and
+`target/release/sas-cli.exe`. The runtime is linked statically.
+Development checks:
 
 ```text
 cargo fmt --all -- --check
 cargo clippy --all-targets --locked -- -D warnings
 cargo test --release --locked
-cargo build --release --locked
 ```
 
-Alternatively, with a portable LLVM-MinGW UCRT toolchain installed in
-`C:\tools\llvm-mingw`, PowerShell can build without Visual Studio:
+A portable LLVM-MinGW UCRT toolchain can also build the project:
 
 ```powershell
 rustup toolchain install stable-x86_64-pc-windows-gnullvm --profile minimal
 $env:PATH = "C:\tools\llvm-mingw\bin;$env:USERPROFILE\.cargo\bin;$env:PATH"
 $env:CARGO_TARGET_X86_64_PC_WINDOWS_GNULLVM_LINKER = "x86_64-w64-mingw32-clang.exe"
 $env:WINDRES = "llvm-windres.exe"
-cargo +stable-x86_64-pc-windows-gnullvm test --release --locked
 cargo +stable-x86_64-pc-windows-gnullvm build --release --locked
 ```
 
-Both configurations link their runtime statically. Binaries are in `target\release`.
-CI builds and tests on Windows; pushing a `v*` tag retains the GitHub release flow.
-`python tools\make_icon.py` regenerates the icons.
+CI builds and tests with Cargo on Windows. Pushing a `v*` tag publishes the
+executables through the existing GitHub release workflow.
 
 ## Diagnostics
 
@@ -151,21 +147,16 @@ processing milliseconds per audio second, 95th/99th-percentile chunk times, ring
 bytes, and kernel bytes. Kernels are shared when multiple outputs use the same
 sample-rate pair. `run` also reports audio/control wake counts.
 
-For live stability and process-memory measurements, run
-`tools/perf-check.ps1 -TargetDevice 1 -Seconds 1800 -Verify` in PowerShell.
-It tests 0, 0.5, and 1 ms safety margins, stops a candidate after an underrun or
-resync, and writes logs and JSON into `target/perf`. It temporarily closes running
-Simple Audio Split windows to isolate playback and restores them in the tray.
-
 ## Source and tests
 
-- `rust/audio.rs`: device enumeration, WASAPI streams, sample conversion, test chime.
-- `rust/dsp.rs`: channel mapping, sinc FIFO, drift control, per-output delay/recovery.
-- `rust/bench.rs`: deterministic DSP timing and allocation benchmarks.
-- `rust/engine.rs`: control/audio threads, notifications, recovery, status.
-- `rust/app.rs`: native dialog, tray, autostart controls and delay controls.
-- `rust/settings.rs`: compatible INI persistence and startup registry entry.
-- `rust/cli.rs`: diagnostics, timestamp-aligned signal verification.
+- `src/audio.rs`: device enumeration, WASAPI streams, sample conversion, test chime.
+- `src/dsp.rs`: channel mapping, sinc FIFO, drift control, per-output delay/recovery.
+- `src/bench.rs`: deterministic DSP timing and allocation benchmarks.
+- `src/engine.rs`: control/audio threads, notifications, recovery, status.
+- `src/bin/SimpleAudioSplit.rs`: native dialog, tray, autostart controls and delay controls.
+- `src/settings.rs`: compatible INI persistence and startup registry entry.
+- `src/volume.rs`: event-driven master volume/mute following.
+- `src/bin/sas-cli.rs`: diagnostics, timestamp-aligned signal verification.
 
 Tests cover resampling fidelity, format conversion, channel layouts, simulated
 clock drift and scheduling jitter, delay offsets and changes, underrun recovery,

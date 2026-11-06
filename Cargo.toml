@@ -4,21 +4,33 @@ version = "2.0.0"
 edition = "2021"
 rust-version = "1.88"
 build = "build.rs"
-
-[lib]
-path = "rust/lib.rs"
-
-[[bin]]
-name = "SimpleAudioSplit"
-path = "rust/app.rs"
-
-[[bin]]
-name = "sas-cli"
-path = "rust/cli.rs"
+default-run = "SimpleAudioSplit"
 
 [dependencies]
 windows-core = "0.58"
-windows = { version = "0.58", features = ["implement", "Win32_UI_Input_KeyboardAndMouse", "Win32_Storage_FileSystem", "Win32_Foundation", "Win32_Media_Audio", "Win32_Media_Audio_Endpoints", "Win32_Media_KernelStreaming", "Win32_Media_Multimedia", "Win32_System_Com", "Win32_System_Com_StructuredStorage", "Win32_System_Threading", "Win32_System_Registry", "Win32_System_LibraryLoader", "Win32_System_Performance", "Win32_UI_WindowsAndMessaging", "Win32_UI_Controls", "Win32_UI_Shell", "Win32_UI_Shell_PropertiesSystem", "Win32_Devices_FunctionDiscovery", "Win32_Graphics_Gdi", "Win32_Security"] }
+windows = { version = "0.58", features = [
+    "implement",
+    "Win32_UI_Input_KeyboardAndMouse",
+    "Win32_Storage_FileSystem",
+    "Win32_Foundation",
+    "Win32_Media_Audio",
+    "Win32_Media_Audio_Endpoints",
+    "Win32_Media_KernelStreaming",
+    "Win32_Media_Multimedia",
+    "Win32_System_Com",
+    "Win32_System_Com_StructuredStorage",
+    "Win32_System_Threading",
+    "Win32_System_Registry",
+    "Win32_System_LibraryLoader",
+    "Win32_System_Performance",
+    "Win32_UI_WindowsAndMessaging",
+    "Win32_UI_Controls",
+    "Win32_UI_Shell",
+    "Win32_UI_Shell_PropertiesSystem",
+    "Win32_Devices_FunctionDiscovery",
+    "Win32_Graphics_Gdi",
+    "Win32_Security",
+] }
 
 [build-dependencies]
 embed-resource = "3"
